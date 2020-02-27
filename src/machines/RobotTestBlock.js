@@ -7,24 +7,24 @@ import { Yellow } from './parts/Yellow';
 import { Green } from './parts/Green';
 import { Gray } from './parts/Gray';
 
-export default function RobotTest() {
+export default function RobotTestBlock() {
 
     const [current, send] = useMachine(RobotMachine);
 
     return (
         <Frame>
-            <h3>RobotTest <small>component State</small></h3>
+            <h3>RobotTest <small>component Block</small></h3>
             <button onClick={() => send('next')}>next</button>
             <h4>Current <small>{current.name}</small></h4>
-            <State current={current} when="red" fail={<Gray/>}><Red/></State>
-            <State current={current} when="yellow" fail={<Gray/>}><Yellow/></State>
-            <State current={current} when="green" fail={<Gray/>}><Green/></State>
+            <Block test={current.name  === "red"} fail={<Gray/>}><Red/></Block>
+            <Block test={current.name === "yellow"} fail={<Gray/>}><Yellow/></Block>
+            <Block test={current.name === "green"} fail={<Gray/>}><Green/></Block>
         </Frame>
     )
 
 }
 
-function State({current, when, children, fail = undefined}) {
-    return current && current.name === when ? children : fail
+function Block({test, children, fail = undefined}) {
+    return test ? children : fail
 }
 
